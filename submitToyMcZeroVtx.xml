@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<job nProcesses="40" simulateSubmission="false">
+
+        <stdout URL="file:./jobs/log/$JOBID.log" />
+        <stderr URL="file:./jobs/err/$JOBID.err" />
+                
+        <Generator>
+          <Location>./jobs/report/</Location>
+          <ScriptLocation>./jobs/csh/</ScriptLocation>
+          <ListLocation>./jobs/list/</ListLocation>
+        </Generator>
+                                                
+	<ResourceUsage>
+		<Memory>
+			<MinMemory>4000</MinMemory>
+		</Memory>
+	</ResourceUsage>
+
+<command>
+starver SL16j
+
+root4star -q -b -l toyMcDpm.C++\(1e6\)
+mv Dpm.toyMc.root Dpm.$JOBID.toyMc.root
+chgrp rhstar *.root
+chmod g+rw *.root
+</command>
+
+<output fromScratch="*.toyMc.root" toURL="/gpfs01/star/pwg/vanekjan/pythia_fastSim/myOutput/"/>
+
+<SandBox installer="ZIP">
+  <Package name="LocalLibraries">
+		<File>file:./toyMcDpm.C</File>
+    <File>file:./input/</File>
+	</Package>
+</SandBox>
+
+</job>

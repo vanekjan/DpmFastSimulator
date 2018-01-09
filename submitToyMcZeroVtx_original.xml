@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<job nProcesses="40" simulateSubmission="false">
+
+        <stdout URL="file:./jobs/log/$JOBID.log" />
+        <stderr URL="file:./jobs/err/$JOBID.err" />
+                
+        <Generator>
+          <Location>./jobs/report/</Location>
+          <ScriptLocation>./jobs/csh/</ScriptLocation>
+          <ListLocation>./jobs/list/</ListLocation>
+        </Generator>
+                                                
+	<ResourceUsage>
+		<Memory>
+			<MinMemory>4000</MinMemory>
+		</Memory>
+	</ResourceUsage>
+
+<command>
+starver SL16j
+
+root4star -q -b -l toyMcDpm.C++\(1e6\)
+mv Dpm.toyMc.root Dpm.$JOBID.toyMc.root
+chgrp rhstar *.root
+chmod g+rw *.root
+</command>
+
+<output fromScratch="*.toyMc.root" toURL="/gpfs01/star/pwg/vanekjan/pythia_fastSim/myOutput/"/>
+
+<SandBox installer="ZIP">
+  <Package name="LocalLibraries">
+		<File>file:./toyMcDpm.C</File>
+		<File>file:./momentum_resolution.root</File>
+		<File>file:./Vz_Cent.root</File>
+		<File>file:./HFT_Ratio_VsPt_Centrality_Eta_Phi_Vz_Zdcx_16Nov2.root</File>
+		<File>file:./2DProjection_simCent_NoBinWidth_3D_Dca_VsPt_Centrality_Eta_Phi_Vz_Zdcx_16Nov2.root</File>
+    <File>file:./Eff_PionPlus_embedding_v2.root</File>
+    <File>file:./Eff_PionMinus_embedding_v2.root</File>
+    <File>file:./Eff_KaonPlus_embedding_v2.root</File>
+    <File>file:./Eff_KaonMinus_embedding_v2.root</File>
+    <File>file:./pp200_spectra.root</File>
+    <File>file:./tof_eff_dpm_run14.root</File>
+	</Package>
+</SandBox>
+
+</job>
