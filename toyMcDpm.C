@@ -802,7 +802,7 @@ void bookObjects()
 	fWeightFunction = (TF1*)fPP.Get("run12/f1Levy")->Clone("f1Levy");
 	fPP.Close();
 
-	TFile fVertex("./input/Vz_Cent.root");
+	TFile fVertex("./input/Vz_Cent_Run16.root");
 
 	for (int ii = 0; ii < nCentHftRatio; ++ii)
 	{
@@ -814,16 +814,12 @@ void bookObjects()
 
 	cout << "Loading input HFT ratios and DCA ..." << endl;
 	/*
-	TFile fHftRatio1("HFT_Ratio_VsPt_Centrality_Eta_Phi_Vz_Zdcx_16Jun14.root");
-	TFile fDca1("2DProjection_simCent_NoBinWidth_3D_Dca_VsPt_Centrality_Eta_Phi_Vz_Zdcx_16Jun14.root");
+	TFile fHftRatio1("./input/HFT_Ratio_VsPt_Centrality_Eta_Phi_Vz_Zdcx_new_cuts.root"); //strict nSigma cuts
+	TFile fDca1("./input/2DProjection_simCent_NoBinWidth_3D_Dca_VsPt_Centrality_Eta_Phi_Vz_Zdcx_new_cuts.root");
 	*/
-	TFile fHftRatio1("./input/HFT_Ratio_VsPt_Centrality_Eta_Phi_Vz_Zdcx_16Nov2.root");
-	TFile fDca1("./input/2DProjection_simCent_NoBinWidth_3D_Dca_VsPt_Centrality_Eta_Phi_Vz_Zdcx_16Nov2.root");
-	/*
-	TFile fHftRatio1("HFT_Ratio_VsPt_Centrality_Eta_Phi_Vz_Zdcx_16DEC30.root");
-	TFile fDca1("2DProjection_simCent_NoBinWidth_3D_Dca_VsPt_Centrality_Eta_Phi_Vz_Zdcx_16DEC30.root");
-	*/
-
+	TFile fHftRatio1("./input/HFT_Ratio_VsPt_Centrality_Eta_Phi_Vz_Zdcx_ana_cuts.root"); //nSigma cuts as in data production
+	TFile fDca1("./input/2DProjection_simCent_NoBinWidth_3D_Dca_VsPt_Centrality_Eta_Phi_Vz_Zdcx_ana_cuts.root");
+	
 	for (int iParticle = 0; iParticle < nParticles; ++iParticle)
 	{
 		for (int iCent = 0; iCent < nCentHftRatio; ++iCent)

@@ -98,7 +98,7 @@ nb = fChain->GetEntry(jentry);   nbytes += nb;
 		// if (Cut(ientry) < 0) continue;
 
 		// generated Dpm
-		if(cent > -0.5 and cent < 0.5) h_dpm_pt[0]->Fill(pt);
+		if(cent > -0.5 and cent < 0.5) h_dpm_pt[0]->Fill(pt); //add weights (variable w from NTuple)
 		if(cent > 0.5 and cent < 1.5) h_dpm_pt[1]->Fill(pt);
 		if(cent > 1.5 and cent < 2.5) h_dpm_pt[2]->Fill(pt);
 		if(cent > 2.5 and cent < 3.5) h_dpm_pt[3]->Fill(pt);

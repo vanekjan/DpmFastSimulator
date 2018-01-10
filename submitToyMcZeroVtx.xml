@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<job nProcesses="1" simulateSubmission="false">
+<job nProcesses="40" simulateSubmission="false">
 
         <stdout URL="file:./jobs/log/&productionId;/$JOBID.log" />
         <stderr URL="file:./jobs/err/&productionId;/$JOBID.err" />
@@ -19,7 +19,7 @@
 <command>
 starver SL16j
 
-root4star -q -b -l toyMcDpm.C++\(1e5\)
+root4star -q -b -l toyMcDpm.C++\(1e6\)
 mv Dpm.toyMc.root Dpm.$JOBID.toyMc.root
 chgrp rhstar *.root
 chmod g+rw *.root
