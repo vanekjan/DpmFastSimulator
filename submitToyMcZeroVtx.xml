@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<job nProcesses="40" simulateSubmission="false">
+<job nProcesses="1" simulateSubmission="false">
 
-        <stdout URL="file:./jobs/log/$JOBID.log" />
-        <stderr URL="file:./jobs/err/$JOBID.err" />
+        <stdout URL="file:./jobs/log/&productionId;/$JOBID.log" />
+        <stderr URL="file:./jobs/err/&productionId;/$JOBID.err" />
                 
         <Generator>
           <Location>./jobs/report/</Location>
@@ -19,13 +19,13 @@
 <command>
 starver SL16j
 
-root4star -q -b -l toyMcDpm.C++\(1e6\)
+root4star -q -b -l toyMcDpm.C++\(1e5\)
 mv Dpm.toyMc.root Dpm.$JOBID.toyMc.root
 chgrp rhstar *.root
 chmod g+rw *.root
 </command>
 
-<output fromScratch="*.toyMc.root" toURL="/gpfs01/star/pwg/vanekjan/pythia_fastSim/myOutput/"/>
+<output fromScratch="*.toyMc.root" toURL="/gpfs01/star/pwg/vanekjan/pythia_fastSim/myOutput/&productionId;/"/>
 
 <SandBox installer="ZIP">
   <Package name="LocalLibraries">
