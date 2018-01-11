@@ -3,13 +3,17 @@
 //#include <TTree.h>
 //#include "nt.h"
 //#include <iostream>
+//#include"TROOT.h"
 
 
-//void run_nt(TString infile = "Dpm.B47A2BF7B0B04BE7838C9638213FD0E8_99.toyMc.root", TString outfile = "test.root") {
-void run_nt(TString infile = "Dpm.toyMc.root", TString outfile = "test_output.root") {
+//void run_nt(TString infile = "./myOutput/2018-01-10_03-54/Dpm.234EED7E706A6604267C7C98C444E48D_0.toyMc.root", TString outfile = "test.root") { //for output from submit
+void run_nt(TString infile = "Dpm.toyMc.root", TString outfile = "test_output_02.root") { //for output from local test
+  std::cout << "start " << std::endl;
 	gROOT->ProcessLine(".L nt.C+");
 	//gROOT->ProcessLine(".L nt.C");
+  std::cout << "1 " << std::endl;
 	TFile *f_input = new TFile(infile, "open");
+  std::cout << "2" << std::endl;
 	TTree *tree_nt = (TTree*)f_input->Get("nt");
 	nt n(tree_nt);
 	n.Set_out_file_name(outfile);

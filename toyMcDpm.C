@@ -173,7 +173,7 @@ float const sigmaVertexCent[nCentHftRatio] = {31., 18.1, 12.8, 9.3, 7.2, 5.9, 5.
 TF1* fPionTofEff= NULL;
 TF1* fKaonTofEff= NULL;
 TH1D* h_pi_tof_eff;
-TH1D* hk_tof_eff;
+TH1D* h_k_tof_eff;
 
 //============== main  program ==================
 void toyMcDpm(int npart = 10000)
@@ -720,17 +720,13 @@ bool matchHft(int const iParticleIndex, double const vz, int const cent, TLorent
 
 bool matchTOF(int const iParticleIndex, TLorentzVector const& mom)
 {
-	/*
-	int const iEtaIndex = getEtaIndexHftRatio(mom.PseudoRapidity());
-	int const iVzIndex = getVzIndexHftRatio(vz);
-	int const iPhiIndex = getPhiIndexHftRatio(mom.Phi());
-	*/
-
-	//int const bin = hHftRatio1[iParticleIndex][iEtaIndex][iVzIndex][iPhiIndex][cent]->FindBin(mom.Perp());
 
 	//cout << "tof eff ... " << endl;
 	if (iParticleIndex == 0) { // pion
-		return gRandom->Rndm() < fPionTofEff->Eval(mom.Perp());
+		//return gRandom->Rndm() < fPionTofEff->Eval(mom.Perp()); //from function
+    
+    return gRandom->Rndm() < h_pi_tof_eff->GetBinContent(h_pi_tof_eff->FindBin(mom.Perp())); //from histogram
+    
 		/*
 		if (gRandom->Rndm() < fKaonTofEff->Eval(5.)) {
 		cout << "pion " << endl;
@@ -744,8 +740,11 @@ bool matchTOF(int const iParticleIndex, TLorentzVector const& mom)
 			return gRandom->Rndm() < h_pi_tof_eff->GetBinContent(bin);
 		}
 		*/
-	} else if (iParticleIndex == 1) { // kaon
-		return gRandom->Rndm() < fKaonTofEff->Eval(mom.Perp());
+	} 
+  else if (iParticleIndex == 1) { // kaon
+		//return gRandom->Rndm() < fKaonTofEff->Eval(mom.Perp()); //from function
+
+    return gRandom->Rndm() < h_k_tof_eff->GetBinContent(h_k_tof_eff->FindBin(mom.Perp())); //from histogram
 		/*
 		cout << "kaon " << endl;
 		if (mom.Perp() > 10.) {
@@ -778,9 +777,11 @@ void bookObjects()
 	f.Close();
 
 	cout << "Loading TOF eff ..." << endl;
-	TFile f_tof("./input/tof_eff_dpm_run14.root");
-	fPionTofEff = (TF1*)f_tof.Get("fPion")->Clone("fPion");
-	fKaonTofEff = (TF1*)f_tof.Get("fKaon")->Clone("fKaon");
+	TFile f_tof("./input/tof_eff_Dmp_run16_HFT_1sig_20_hist.root"); //tof_eff_Dmp_run16_HFT_1sig_20_hist.root contains histograms only!!!
+	//fPionTofEff = (TF1*)f_tof.Get("fPion")->Clone("fPion"); //commented for tof_eff_Dmp_run16_HFT_1sig_20_hist.root input
+	//fKaonTofEff = (TF1*)f_tof.Get("fKaon")->Clone("fKaon");
+  h_pi_tof_eff = (TD1D*)f_tof.Get("h_pi_tof_eff");
+  h_k_tof_eff = (TD1D*)f_tof.Get("h_k_tof_eff");
 	/*
 	float pp = 5.;
 	cout << "at 5 " << fKaonTofEff->Eval(pp) << endl;

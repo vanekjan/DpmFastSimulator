@@ -34,7 +34,7 @@ void nt::Loop()
 	if (fChain == 0) return;
 
 	// generated Dpm histograms
-    TH1F *h_dpm_pt[9];
+  TH1F *h_dpm_pt[9];
 	h_dpm_pt[0] = new TH1F("h_dpm_pt0","h_dpm_pt0",150, 0, 15);
 	h_dpm_pt[1] = new TH1F("h_dpm_pt1","h_dpm_pt1",150, 0, 15);
 	h_dpm_pt[2] = new TH1F("h_dpm_pt2","h_dpm_pt2",150, 0, 15);
@@ -46,6 +46,7 @@ void nt::Loop()
 	h_dpm_pt[8] = new TH1F("h_dpm_pt8","h_dpm_pt8",150, 0, 15);
 	TH1F *h_dpm_phi = new TH1F("h_dpm_phi","h_dpm_phi",64, -3.2, 3.2);
 	TH2F *h_dpm_eta_phi = new TH2F("h_dpm_eta_phi","h_dpm_eta_phi", 140, -1.2, 1.2, 64, -3.2, 3.2);
+
 	h_dpm_pt[0]->Sumw2();
 	h_dpm_pt[1]->Sumw2();
 	h_dpm_pt[2]->Sumw2();
@@ -58,8 +59,8 @@ void nt::Loop()
 	h_dpm_phi->Sumw2();
 	h_dpm_eta_phi->Sumw2();
 
-	// reconstructed Dpm histograms
-    TH1F *h_r_dpm_pt[9];
+	// reconstructed Dpm histograms without TOF matching
+  TH1F *h_r_dpm_pt[9];
 	h_r_dpm_pt[0] = new TH1F("h_r_dpm_pt0","h_r_dpm_pt0",150, 0, 15);
 	h_r_dpm_pt[1] = new TH1F("h_r_dpm_pt1","h_r_dpm_pt1",150, 0, 15);
 	h_r_dpm_pt[2] = new TH1F("h_r_dpm_pt2","h_r_dpm_pt2",150, 0, 15);
@@ -71,6 +72,7 @@ void nt::Loop()
 	h_r_dpm_pt[8] = new TH1F("h_r_dpm_pt8","h_r_dpm_pt8",150, 0, 15);
 	TH1F *h_r_dpm_phi = new TH1F("h_r_dpm_phi","h_r_dpm_phi",64, -3.2, 3.2);
 	TH2F *h_r_dpm_eta_phi = new TH2F("h_r_dpm_eta_phi","h_r_dpm_eta_phi", 140, -1.2, 1.2, 64, -3.2, 3.2);
+
 	h_r_dpm_pt[0]->Sumw2();
 	h_r_dpm_pt[1]->Sumw2();
 	h_r_dpm_pt[2]->Sumw2();
@@ -83,6 +85,33 @@ void nt::Loop()
 	h_r_dpm_phi->Sumw2();
 	h_r_dpm_eta_phi->Sumw2();
 
+  // reconstructed Dpm histograms with TOF matching
+  TH1F *h_r_dpm_pt_TOF_match[9];
+	h_r_dpm_pt_TOF_match[0] = new TH1F("h_r_dpm_pt_TOF_match0","h_r_dpm_pt_TOF_match0",150, 0, 15);
+	h_r_dpm_pt_TOF_match[1] = new TH1F("h_r_dpm_pt_TOF_match1","h_r_dpm_pt_TOF_match1",150, 0, 15);
+	h_r_dpm_pt_TOF_match[2] = new TH1F("h_r_dpm_pt_TOF_match2","h_r_dpm_pt_TOF_match2",150, 0, 15);
+	h_r_dpm_pt_TOF_match[3] = new TH1F("h_r_dpm_pt_TOF_match3","h_r_dpm_pt_TOF_match3",150, 0, 15);
+	h_r_dpm_pt_TOF_match[4] = new TH1F("h_r_dpm_pt_TOF_match4","h_r_dpm_pt_TOF_match4",150, 0, 15);
+	h_r_dpm_pt_TOF_match[5] = new TH1F("h_r_dpm_pt_TOF_match5","h_r_dpm_pt_TOF_match5",150, 0, 15);
+	h_r_dpm_pt_TOF_match[6] = new TH1F("h_r_dpm_pt_TOF_match6","h_r_dpm_pt_TOF_match6",150, 0, 15);
+	h_r_dpm_pt_TOF_match[7] = new TH1F("h_r_dpm_pt_TOF_match7","h_r_dpm_pt_TOF_match7",150, 0, 15);
+	h_r_dpm_pt_TOF_match[8] = new TH1F("h_r_dpm_pt_TOF_match8","h_r_dpm_pt_TOF_match8",150, 0, 15);
+	TH1F *h_r_dpm_phi_TOF_match = new TH1F("h_r_dpm_phi_TOF_match","h_r_dpm_phi_TOF_match",64, -3.2, 3.2);
+	TH2F *h_r_dpm_eta_phi_TOF_match = new TH2F("h_r_dpm_eta_phi_TOF_match","h_r_dpm_eta_phi_TOF_match", 140, -1.2, 1.2, 64, -3.2, 3.2);
+
+	h_r_dpm_pt_TOF_match[0]->Sumw2();
+	h_r_dpm_pt_TOF_match[1]->Sumw2();
+	h_r_dpm_pt_TOF_match[2]->Sumw2();
+	h_r_dpm_pt_TOF_match[3]->Sumw2();
+	h_r_dpm_pt_TOF_match[4]->Sumw2();
+	h_r_dpm_pt_TOF_match[5]->Sumw2();
+	h_r_dpm_pt_TOF_match[6]->Sumw2();
+	h_r_dpm_pt_TOF_match[7]->Sumw2();
+	h_r_dpm_pt_TOF_match[8]->Sumw2();
+	h_r_dpm_phi_TOF_match->Sumw2();
+	h_r_dpm_eta_phi_TOF_match->Sumw2();
+
+
 	// now cuts
 	TH1D *n_cuts = new TH1D("n_cuts","n_cuts",100,0,100);
 
@@ -93,12 +122,13 @@ void nt::Loop()
 	for (Long64_t jentry=0; jentry<nentries;jentry++) {
 		Long64_t ientry = LoadTree(jentry);
 		if (ientry < 0) break;
-if(jentry%(nentries/10)==0) std::cout<<((jentry+10)*100/nentries)<<" % done..."<<std::endl;		
-nb = fChain->GetEntry(jentry);   nbytes += nb;
+    if(jentry%(nentries/10)==0) std::cout<<((jentry+10)*100/nentries)<<" % done..."<<std::endl;		
+    nb = fChain->GetEntry(jentry);
+    nbytes += nb;
 		// if (Cut(ientry) < 0) continue;
 
 		// generated Dpm
-		if(cent > -0.5 and cent < 0.5) h_dpm_pt[0]->Fill(pt); //add weights (variable w from NTuple)
+		if(cent > -0.5 and cent < 0.5) h_dpm_pt[0]->Fill(pt); //add weights? (variable w from NTuple)
 		if(cent > 0.5 and cent < 1.5) h_dpm_pt[1]->Fill(pt);
 		if(cent > 1.5 and cent < 2.5) h_dpm_pt[2]->Fill(pt);
 		if(cent > 2.5 and cent < 3.5) h_dpm_pt[3]->Fill(pt);
@@ -172,7 +202,7 @@ nb = fChain->GetEntry(jentry);   nbytes += nb;
 		n_cuts->Fill(16);
 		*/
 
-		// reconstructed Dpm 
+		// reconstructed Dpm without TOF matching
 		if(cent > -0.5 and cent < 0.5) h_r_dpm_pt[0]->Fill(pt);
 		if(cent > 0.5 and cent < 1.5) h_r_dpm_pt[1]->Fill(pt);
 		if(cent > 1.5 and cent < 2.5) h_r_dpm_pt[2]->Fill(pt);
@@ -183,11 +213,29 @@ nb = fChain->GetEntry(jentry);   nbytes += nb;
 		if(cent > 6.5 and cent < 7.5) h_r_dpm_pt[7]->Fill(pt);
 		if(cent > 7.5 and cent < 8.5) h_r_dpm_pt[8]->Fill(pt);
 
-
 		h_r_dpm_phi->Fill(phi);
 		h_r_dpm_eta_phi->Fill(eta, phi);
+
+    //TOF matching
+    if (kTof != 1 || p1Tof != 1 || p2Tof != 1) continue;
+    n_cuts->Fill(15);
+
+    // reconstructed Dpm with TOF matching
+		if(cent > -0.5 and cent < 0.5) h_r_dpm_pt_TOF_match[0]->Fill(pt);
+		if(cent > 0.5 and cent < 1.5) h_r_dpm_pt_TOF_match[1]->Fill(pt);
+		if(cent > 1.5 and cent < 2.5) h_r_dpm_pt_TOF_match[2]->Fill(pt);
+		if(cent > 2.5 and cent < 3.5) h_r_dpm_pt_TOF_match[3]->Fill(pt);
+		if(cent > 3.5 and cent < 4.5) h_r_dpm_pt_TOF_match[4]->Fill(pt);
+		if(cent > 4.5 and cent < 5.5) h_r_dpm_pt_TOF_match[5]->Fill(pt);
+		if(cent > 5.5 and cent < 6.5) h_r_dpm_pt_TOF_match[6]->Fill(pt);
+		if(cent > 6.5 and cent < 7.5) h_r_dpm_pt_TOF_match[7]->Fill(pt);
+		if(cent > 7.5 and cent < 8.5) h_r_dpm_pt_TOF_match[8]->Fill(pt);
+
+    h_r_dpm_phi_TOF_match->Fill(phi);
+		h_r_dpm_eta_phi_TOF_match->Fill(eta, phi);
 		
-	}
+	} //end entries loop
+
 	TFile *f = new TFile(out_file_name, "recreate");
 	h_dpm_pt[0]->Write();
 	h_dpm_pt[1]->Write();
@@ -200,6 +248,7 @@ nb = fChain->GetEntry(jentry);   nbytes += nb;
 	h_dpm_pt[8]->Write();
 	h_dpm_phi->Write();
 	h_dpm_eta_phi->Write();
+
 	h_r_dpm_pt[0]->Write();
 	h_r_dpm_pt[1]->Write();
 	h_r_dpm_pt[2]->Write();
@@ -212,5 +261,18 @@ nb = fChain->GetEntry(jentry);   nbytes += nb;
 	h_r_dpm_phi->Write();
 	h_r_dpm_eta_phi->Write();
 	n_cuts->Write();
+
+  h_r_dpm_pt_TOF_match[0]->Write();
+	h_r_dpm_pt_TOF_match[1]->Write();
+	h_r_dpm_pt_TOF_match[2]->Write();
+	h_r_dpm_pt_TOF_match[3]->Write();
+	h_r_dpm_pt_TOF_match[4]->Write();
+	h_r_dpm_pt_TOF_match[5]->Write();
+	h_r_dpm_pt_TOF_match[6]->Write();
+	h_r_dpm_pt_TOF_match[7]->Write();
+	h_r_dpm_pt_TOF_match[8]->Write();
+	h_r_dpm_phi_TOF_match->Write();
+	h_r_dpm_eta_phi_TOF_match->Write();
+
 	f->Close();
 }
