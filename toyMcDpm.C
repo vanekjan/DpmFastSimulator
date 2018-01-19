@@ -761,7 +761,7 @@ bool matchTOF(int const iParticleIndex, TLorentzVector const& mom)
 			cout << "bin " << bin << endl;
 			return gRandom->Rndm() < hk_tof_eff->GetBinContent(bin);
 		}
-		*/
+	*/
 	} else {
 		return false;
 	}
@@ -780,8 +780,10 @@ void bookObjects()
 	TFile f_tof("./input/tof_eff_Dmp_run16_HFT_1sig_20_hist.root"); //tof_eff_Dmp_run16_HFT_1sig_20_hist.root contains histograms only!!!
 	//fPionTofEff = (TF1*)f_tof.Get("fPion")->Clone("fPion"); //commented for tof_eff_Dmp_run16_HFT_1sig_20_hist.root input
 	//fKaonTofEff = (TF1*)f_tof.Get("fKaon")->Clone("fKaon");
-  h_pi_tof_eff = (TD1D*)f_tof.Get("h_pi_tof_eff");
-  h_k_tof_eff = (TD1D*)f_tof.Get("h_k_tof_eff");
+  h_pi_tof_eff = (TH1D*)f_tof.Get("h_pi_tof_eff");
+  h_pi_tof_eff->SetDirectory(0);
+  h_k_tof_eff = (TH1D*)f_tof.Get("h_k_tof_eff");
+  h_k_tof_eff->SetDirectory(0);
 	/*
 	float pp = 5.;
 	cout << "at 5 " << fKaonTofEff->Eval(pp) << endl;
@@ -818,8 +820,10 @@ void bookObjects()
 	TFile fHftRatio1("./input/HFT_Ratio_VsPt_Centrality_Eta_Phi_Vz_Zdcx_new_cuts.root"); //strict nSigma cuts
 	TFile fDca1("./input/2DProjection_simCent_NoBinWidth_3D_Dca_VsPt_Centrality_Eta_Phi_Vz_Zdcx_new_cuts.root");
 	*/
-	TFile fHftRatio1("./input/HFT_Ratio_VsPt_Centrality_Eta_Phi_Vz_Zdcx_ana_cuts.root"); //nSigma cuts as in data production
+	TFile* fHftRatio1 = new TFile("./input/HFT_Ratio_VsPt_Centrality_Eta_Phi_Vz_Zdcx_ana_cuts.root", "read"); //nSigma cuts as in data production
 	TFile fDca1("./input/2DProjection_simCent_NoBinWidth_3D_Dca_VsPt_Centrality_Eta_Phi_Vz_Zdcx_ana_cuts.root");
+
+//cout<<"test"<<endl;
 	
 	for (int iParticle = 0; iParticle < nParticles; ++iParticle)
 	{
@@ -832,7 +836,8 @@ void bookObjects()
 				{
 					for (int iPhi = 0; iPhi < nPhisHftRatio; ++iPhi)
 					{
-						hHftRatio1[iParticle][iEta][iVz][iPhi][iCent] = (TH1D*)(fHftRatio1.Get(Form("mh1HFT1PtCentPartEtaVzPhiRatio_%i_%i_%i_%i_%i", iParticle, iEta, iVz, iPhi, iCent)));
+            //cout<<iParticle<<" "<<iEta<<" "<<iVz<<" "<<iPhi<<" "<<iCent<<endl;
+						hHftRatio1[iParticle][iEta][iVz][iPhi][iCent] = (TH1D*)fHftRatio1->Get(Form("mh1HFT1PtCentPartEtaVzPhi_%i_%i_%i_%i_%i", iParticle, iEta, iVz, iPhi, iCent));
 						hHftRatio1[iParticle][iEta][iVz][iPhi][iCent]->SetDirectory(0);
 					}
 				}
@@ -860,7 +865,7 @@ void bookObjects()
 	}
 	cout << "Finished loading Dca: " <<  endl;
 
-	fHftRatio1.Close();
+	fHftRatio1->Close();
 	fDca1.Close();
 
 	cout << " Loading TPC tracking efficiencies " << endl;

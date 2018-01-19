@@ -11,9 +11,7 @@ void run_nt(TString infile = "Dpm.toyMc.root", TString outfile = "test_output_02
   std::cout << "start " << std::endl;
 	gROOT->ProcessLine(".L nt.C+");
 	//gROOT->ProcessLine(".L nt.C");
-  std::cout << "1 " << std::endl;
 	TFile *f_input = new TFile(infile, "open");
-  std::cout << "2" << std::endl;
 	TTree *tree_nt = (TTree*)f_input->Get("nt");
 	nt n(tree_nt);
 	n.Set_out_file_name(outfile);
