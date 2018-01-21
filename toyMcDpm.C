@@ -650,6 +650,10 @@ TVector3 smearPosData(int const iParticleIndex, double const vz, int cent, TLore
 	// changed to 0-80%
 
 	h2Dca[iParticleIndex][iEtaIndex][iVzIndex][cent][iPtIndex]->GetRandom2(sigmaPosXY, sigmaPosZ);
+  if(sigmaPosXY==0 || sigmaPosZ==0)
+  {
+    cout<<iParticleIndex<<" "<<iEtaIndex<<" "<<iVzIndex<<" "<<cent<<" "<<iPtIndex<<endl;
+  }
 	// h2Dca[iParticleIndex][iEtaIndex][iVzIndex][iPhiIndex][iPtIndex]->GetRandom2(sigmaPosXY, sigmaPosZ);
 	sigmaPosZ *= 1.e4;
 	sigmaPosXY *= 1.e4;
@@ -816,12 +820,12 @@ void bookObjects()
 	fVertex.Close();
 
 	cout << "Loading input HFT ratios and DCA ..." << endl;
-	/*
-	TFile fHftRatio1("./input/HFT_Ratio_VsPt_Centrality_Eta_Phi_Vz_Zdcx_new_cuts.root"); //strict nSigma cuts
+	
+	TFile *fHftRatio1 = new TFile("./input/HFT_Ratio_VsPt_Centrality_Eta_Phi_Vz_Zdcx_new_cuts.root", "read"); //strict nSigma cuts (1Sigma)
 	TFile fDca1("./input/2DProjection_simCent_NoBinWidth_3D_Dca_VsPt_Centrality_Eta_Phi_Vz_Zdcx_new_cuts.root");
-	*/
-	TFile* fHftRatio1 = new TFile("./input/HFT_Ratio_VsPt_Centrality_Eta_Phi_Vz_Zdcx_ana_cuts.root", "read"); //nSigma cuts as in data production
-	TFile fDca1("./input/2DProjection_simCent_NoBinWidth_3D_Dca_VsPt_Centrality_Eta_Phi_Vz_Zdcx_ana_cuts.root");
+	
+	//TFile* fHftRatio1 = new TFile("./input/HFT_Ratio_VsPt_Centrality_Eta_Phi_Vz_Zdcx_ana_cuts.root", "read"); //nSigma cuts as in data production
+    //TFile fDca1("./input/2DProjection_simCent_NoBinWidth_3D_Dca_VsPt_Centrality_Eta_Phi_Vz_Zdcx_ana_cuts.root");
 
 //cout<<"test"<<endl;
 	
