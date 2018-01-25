@@ -216,8 +216,13 @@ void nt::Loop()
 		h_r_dpm_phi->Fill(phi);
 		h_r_dpm_eta_phi->Fill(eta, phi);
 
-    //TOF matching
-    if (kTof != 1 || p1Tof != 1 || p2Tof != 1) continue;
+    //TOF matching, "full" TOF - all particles have to have TOF
+    //if (kTof != 1 || p1Tof != 1 || p2Tof != 1) continue;
+    //n_cuts->Fill(15);
+
+    //TOF matching, "soft" TOF - one or more particles has to have TOF information
+    if (kTof == 1 || p1Tof == 1 || p2Tof == 1)
+    {
     n_cuts->Fill(15);
 
     // reconstructed Dpm with TOF matching
@@ -233,6 +238,7 @@ void nt::Loop()
 
     h_r_dpm_phi_TOF_match->Fill(phi);
 		h_r_dpm_eta_phi_TOF_match->Fill(eta, phi);
+   }
 		
 	} //end entries loop
 
