@@ -35,82 +35,92 @@ void nt::Loop()
 
 	// generated Dpm histograms
   TH1F *h_dpm_pt[9];
-	h_dpm_pt[0] = new TH1F("h_dpm_pt0","h_dpm_pt0",150, 0, 15);
-	h_dpm_pt[1] = new TH1F("h_dpm_pt1","h_dpm_pt1",150, 0, 15);
-	h_dpm_pt[2] = new TH1F("h_dpm_pt2","h_dpm_pt2",150, 0, 15);
-	h_dpm_pt[3] = new TH1F("h_dpm_pt3","h_dpm_pt3",150, 0, 15);
-	h_dpm_pt[4] = new TH1F("h_dpm_pt4","h_dpm_pt4",150, 0, 15);
-	h_dpm_pt[5] = new TH1F("h_dpm_pt5","h_dpm_pt5",150, 0, 15);
-	h_dpm_pt[6] = new TH1F("h_dpm_pt6","h_dpm_pt6",150, 0, 15);
-	h_dpm_pt[7] = new TH1F("h_dpm_pt7","h_dpm_pt7",150, 0, 15);
-	h_dpm_pt[8] = new TH1F("h_dpm_pt8","h_dpm_pt8",150, 0, 15);
-	TH1F *h_dpm_phi = new TH1F("h_dpm_phi","h_dpm_phi",64, -3.2, 3.2);
-	TH2F *h_dpm_eta_phi = new TH2F("h_dpm_eta_phi","h_dpm_eta_phi", 140, -1.2, 1.2, 64, -3.2, 3.2);
+  for(unsigned int i = 0; i<9; i++)
+  {
+    h_dpm_pt[i] = new TH1F(Form("h_dpm_pt%i", i),Form("Generated_Dpm_cent_%i", i),150, 0, 15);
+    h_dpm_pt[i]->Sumw2();
 
-	h_dpm_pt[0]->Sumw2();
-	h_dpm_pt[1]->Sumw2();
-	h_dpm_pt[2]->Sumw2();
-	h_dpm_pt[3]->Sumw2();
-	h_dpm_pt[4]->Sumw2();
-	h_dpm_pt[5]->Sumw2();
-	h_dpm_pt[6]->Sumw2();
-	h_dpm_pt[7]->Sumw2();
-	h_dpm_pt[8]->Sumw2();
+  }
+	TH1F *h_dpm_phi = new TH1F("h_dpm_phi","Generated_Dpm_phi",64, -3.2, 3.2);
+	TH2F *h_dpm_eta_phi = new TH2F("h_dpm_eta_phi","Generated_Dpm_eta_phi", 140, -1.2, 1.2, 64, -3.2, 3.2);
+
 	h_dpm_phi->Sumw2();
 	h_dpm_eta_phi->Sumw2();
-
+  //---------------------------------------------------------------------------------------------
 	// reconstructed Dpm histograms without TOF matching
   TH1F *h_r_dpm_pt[9];
-	h_r_dpm_pt[0] = new TH1F("h_r_dpm_pt0","h_r_dpm_pt0",150, 0, 15);
-	h_r_dpm_pt[1] = new TH1F("h_r_dpm_pt1","h_r_dpm_pt1",150, 0, 15);
-	h_r_dpm_pt[2] = new TH1F("h_r_dpm_pt2","h_r_dpm_pt2",150, 0, 15);
-	h_r_dpm_pt[3] = new TH1F("h_r_dpm_pt3","h_r_dpm_pt3",150, 0, 15);
-	h_r_dpm_pt[4] = new TH1F("h_r_dpm_pt4","h_r_dpm_pt4",150, 0, 15);
-	h_r_dpm_pt[5] = new TH1F("h_r_dpm_pt5","h_r_dpm_pt5",150, 0, 15);
-	h_r_dpm_pt[6] = new TH1F("h_r_dpm_pt6","h_r_dpm_pt6",150, 0, 15);
-	h_r_dpm_pt[7] = new TH1F("h_r_dpm_pt7","h_r_dpm_pt7",150, 0, 15);
-	h_r_dpm_pt[8] = new TH1F("h_r_dpm_pt8","h_r_dpm_pt8",150, 0, 15);
-	TH1F *h_r_dpm_phi = new TH1F("h_r_dpm_phi","h_r_dpm_phi",64, -3.2, 3.2);
-	TH2F *h_r_dpm_eta_phi = new TH2F("h_r_dpm_eta_phi","h_r_dpm_eta_phi", 140, -1.2, 1.2, 64, -3.2, 3.2);
+  for(unsigned int i = 0; i<9; i++)
+  {
+    h_r_dpm_pt[i] = new TH1F(Form("h_r_dpm_pt%i", i),Form("Reconstructed_Dpm_no_TOF_cent_%i", i),150, 0, 15);
+    h_r_dpm_pt[i]->Sumw2();
 
-	h_r_dpm_pt[0]->Sumw2();
-	h_r_dpm_pt[1]->Sumw2();
-	h_r_dpm_pt[2]->Sumw2();
-	h_r_dpm_pt[3]->Sumw2();
-	h_r_dpm_pt[4]->Sumw2();
-	h_r_dpm_pt[5]->Sumw2();
-	h_r_dpm_pt[6]->Sumw2();
-	h_r_dpm_pt[7]->Sumw2();
-	h_r_dpm_pt[8]->Sumw2();
+  }
+	TH1F *h_r_dpm_phi = new TH1F("h_r_dpm_phi","Reconstructed_Dpm_no_TOF_phi",64, -3.2, 3.2);
+	TH2F *h_r_dpm_eta_phi = new TH2F("h_r_dpm_eta_phi","Reconstructed_Dpm_no_TOF_eta_phi", 140, -1.2, 1.2, 64, -3.2, 3.2);
+
 	h_r_dpm_phi->Sumw2();
 	h_r_dpm_eta_phi->Sumw2();
+  //----------------------------------------------------------------------------------------------------
 
-  // reconstructed Dpm histograms with TOF matching
+  // reconstructed Dpm histograms with TOF matching:
+  //at least 1 daughter has to have TOF
   TH1F *h_r_dpm_pt_TOF_match[9];
-	h_r_dpm_pt_TOF_match[0] = new TH1F("h_r_dpm_pt_TOF_match0","h_r_dpm_pt_TOF_match0",150, 0, 15);
-	h_r_dpm_pt_TOF_match[1] = new TH1F("h_r_dpm_pt_TOF_match1","h_r_dpm_pt_TOF_match1",150, 0, 15);
-	h_r_dpm_pt_TOF_match[2] = new TH1F("h_r_dpm_pt_TOF_match2","h_r_dpm_pt_TOF_match2",150, 0, 15);
-	h_r_dpm_pt_TOF_match[3] = new TH1F("h_r_dpm_pt_TOF_match3","h_r_dpm_pt_TOF_match3",150, 0, 15);
-	h_r_dpm_pt_TOF_match[4] = new TH1F("h_r_dpm_pt_TOF_match4","h_r_dpm_pt_TOF_match4",150, 0, 15);
-	h_r_dpm_pt_TOF_match[5] = new TH1F("h_r_dpm_pt_TOF_match5","h_r_dpm_pt_TOF_match5",150, 0, 15);
-	h_r_dpm_pt_TOF_match[6] = new TH1F("h_r_dpm_pt_TOF_match6","h_r_dpm_pt_TOF_match6",150, 0, 15);
-	h_r_dpm_pt_TOF_match[7] = new TH1F("h_r_dpm_pt_TOF_match7","h_r_dpm_pt_TOF_match7",150, 0, 15);
-	h_r_dpm_pt_TOF_match[8] = new TH1F("h_r_dpm_pt_TOF_match8","h_r_dpm_pt_TOF_match8",150, 0, 15);
-	TH1F *h_r_dpm_phi_TOF_match = new TH1F("h_r_dpm_phi_TOF_match","h_r_dpm_phi_TOF_match",64, -3.2, 3.2);
-	TH2F *h_r_dpm_eta_phi_TOF_match = new TH2F("h_r_dpm_eta_phi_TOF_match","h_r_dpm_eta_phi_TOF_match", 140, -1.2, 1.2, 64, -3.2, 3.2);
+  for(unsigned int i = 0; i<9; i++)
+  {
+    h_r_dpm_pt_TOF_match[i] = new TH1F(Form("h_r_dpm_pt_TOF_match%i", i),Form("Reconstructed_Dpm_hybrid_TOF_cent_%i", i),150, 0, 15);
+    h_r_dpm_pt_TOF_match[i]->Sumw2();
 
-	h_r_dpm_pt_TOF_match[0]->Sumw2();
-	h_r_dpm_pt_TOF_match[1]->Sumw2();
-	h_r_dpm_pt_TOF_match[2]->Sumw2();
-	h_r_dpm_pt_TOF_match[3]->Sumw2();
-	h_r_dpm_pt_TOF_match[4]->Sumw2();
-	h_r_dpm_pt_TOF_match[5]->Sumw2();
-	h_r_dpm_pt_TOF_match[6]->Sumw2();
-	h_r_dpm_pt_TOF_match[7]->Sumw2();
-	h_r_dpm_pt_TOF_match[8]->Sumw2();
+  }
+	TH1F *h_r_dpm_phi_TOF_match = new TH1F("h_r_dpm_phi_TOF_match","Reconstructed_Dpm_hybrid_TOF_phi",64, -3.2, 3.2);
+	TH2F *h_r_dpm_eta_phi_TOF_match = new TH2F("h_r_dpm_eta_phi_TOF_match","Reconstructed_Dpm_hybrid_TOF_eta_phi", 140, -1.2, 1.2, 64, -3.2, 3.2);
+
 	h_r_dpm_phi_TOF_match->Sumw2();
 	h_r_dpm_eta_phi_TOF_match->Sumw2();
+  //----------------------------------------------------------------------------------------------------------------------------------
 
+  //individual possible combiunations seperately:
+  //only one daughter has TOF
+  TH1F *h_r_dpm_pt_TOF_match_one[9];
+  for(unsigned int i = 0; i<9; i++)
+  {
+    h_r_dpm_pt_TOF_match_one[i] = new TH1F(Form("h_r_dpm_pt_TOF_match_one%i", i),Form("Reconstructed_Dpm_one_TOF_cent_%i", i),150, 0, 15);
+    h_r_dpm_pt_TOF_match_one[i]->Sumw2();
+
+  }
+	TH1F *h_r_dpm_phi_TOF_match_one = new TH1F("h_r_dpm_phi_TOF_match_one","Reconstructed_Dpm_one_TOF_phi",64, -3.2, 3.2);
+	TH2F *h_r_dpm_eta_phi_TOF_match_one = new TH2F("h_r_dpm_eta_phi_TOF_match_one","Reconstructed_Dpm_one_TOF_eta_phi", 140, -1.2, 1.2, 64, -3.2, 3.2);
+
+	h_r_dpm_phi_TOF_match_one->Sumw2();
+	h_r_dpm_eta_phi_TOF_match_one->Sumw2();
+  //______________________________________________________________________________________________________________________________________________
+  //two of three daughter have TOF
+  TH1F *h_r_dpm_pt_TOF_match_two[9];
+  for(unsigned int i = 0; i<9; i++)
+  {
+    h_r_dpm_pt_TOF_match_two[i] = new TH1F(Form("h_r_dpm_pt_TOF_match_two%i", i),Form("Reconstructed_Dpm_two_TOF_cent_%i", i),150, 0, 15);
+    h_r_dpm_pt_TOF_match_two[i]->Sumw2();
+
+  }
+	TH1F *h_r_dpm_phi_TOF_match_two = new TH1F("h_r_dpm_phi_TOF_match_two","Reconstructed_Dpm_two_TOF_phi",64, -3.2, 3.2);
+	TH2F *h_r_dpm_eta_phi_TOF_match_two = new TH2F("h_r_dpm_eta_phi_TOF_match_two","Reconstructed_Dpm_two_TOF_eta_phi", 140, -1.2, 1.2, 64, -3.2, 3.2);
+
+	h_r_dpm_phi_TOF_match_two->Sumw2();
+	h_r_dpm_eta_phi_TOF_match_two->Sumw2();
+  //______________________________________________________________________________________________________________________________________________
+  //all three daughter have TOF
+  TH1F *h_r_dpm_pt_TOF_match_three[9];
+  for(unsigned int i = 0; i<9; i++)
+  {
+    h_r_dpm_pt_TOF_match_three[i] = new TH1F(Form("h_r_dpm_pt_TOF_match_three%i", i),Form("Reconstructed_Dpm_three_TOF_cent_i", i),150, 0, 15);
+    h_r_dpm_pt_TOF_match_three[i]->Sumw2();
+
+  }
+	TH1F *h_r_dpm_phi_TOF_match_three = new TH1F("h_r_dpm_phi_TOF_match_three","Reconstructed_Dpm_three_TOF_phi",64, -3.2, 3.2);
+	TH2F *h_r_dpm_eta_phi_TOF_match_three = new TH2F("h_r_dpm_eta_phi_TOF_match_three","Reconstructed_Dpm_three_TOF_eta_phi", 140, -1.2, 1.2, 64, -3.2, 3.2);
+
+	h_r_dpm_phi_TOF_match_three->Sumw2();
+	h_r_dpm_eta_phi_TOF_match_three->Sumw2();
+  //------------------------------------------------------------------------------------------------------------------------------------------------
 
 	// now cuts
 	TH1D *n_cuts = new TH1D("n_cuts","n_cuts",100,0,100);
@@ -128,7 +138,7 @@ void nt::Loop()
 		// if (Cut(ientry) < 0) continue;
 
 		// generated Dpm
-		if(cent > -0.5 and cent < 0.5) h_dpm_pt[0]->Fill(pt); //add weights? (variable w from NTuple)
+		if(cent > -0.5 and cent < 0.5) h_dpm_pt[0]->Fill(pt);
 		if(cent > 0.5 and cent < 1.5) h_dpm_pt[1]->Fill(pt);
 		if(cent > 1.5 and cent < 2.5) h_dpm_pt[2]->Fill(pt);
 		if(cent > 2.5 and cent < 3.5) h_dpm_pt[3]->Fill(pt);
@@ -225,7 +235,7 @@ void nt::Loop()
     {
     n_cuts->Fill(15);
 
-    // reconstructed Dpm with TOF matching
+    // reconstructed Dpm with "soft" TOF matching
 		if(cent > -0.5 and cent < 0.5) h_r_dpm_pt_TOF_match[0]->Fill(pt);
 		if(cent > 0.5 and cent < 1.5) h_r_dpm_pt_TOF_match[1]->Fill(pt);
 		if(cent > 1.5 and cent < 2.5) h_r_dpm_pt_TOF_match[2]->Fill(pt);
@@ -238,47 +248,124 @@ void nt::Loop()
 
     h_r_dpm_phi_TOF_match->Fill(phi);
 		h_r_dpm_eta_phi_TOF_match->Fill(eta, phi);
-   }
+    }
+
+    //TOF matching, fill only if only one of daughters has TOF
+    if ( (kTof == 1 && p1Tof == 0 && p2Tof == 0) || (kTof == 0 && p1Tof == 1 && p2Tof == 0) || (kTof == 0 && p1Tof == 0 && p2Tof == 1) )
+    {
+    n_cuts->Fill(16);
+
+    // reconstructed Dpm with TOF matching
+		if(cent > -0.5 and cent < 0.5) h_r_dpm_pt_TOF_match_one[0]->Fill(pt);
+		if(cent > 0.5 and cent < 1.5) h_r_dpm_pt_TOF_match_one[1]->Fill(pt);
+		if(cent > 1.5 and cent < 2.5) h_r_dpm_pt_TOF_match_one[2]->Fill(pt);
+		if(cent > 2.5 and cent < 3.5) h_r_dpm_pt_TOF_match_one[3]->Fill(pt);
+		if(cent > 3.5 and cent < 4.5) h_r_dpm_pt_TOF_match_one[4]->Fill(pt);
+		if(cent > 4.5 and cent < 5.5) h_r_dpm_pt_TOF_match_one[5]->Fill(pt);
+		if(cent > 5.5 and cent < 6.5) h_r_dpm_pt_TOF_match_one[6]->Fill(pt);
+		if(cent > 6.5 and cent < 7.5) h_r_dpm_pt_TOF_match_one[7]->Fill(pt);
+		if(cent > 7.5 and cent < 8.5) h_r_dpm_pt_TOF_match_one[8]->Fill(pt);
+
+    h_r_dpm_phi_TOF_match_one->Fill(phi);
+		h_r_dpm_eta_phi_TOF_match_one->Fill(eta, phi);
+    }
+
+    //TOF matching, fill only if two of daughters have TOF
+    if ( (kTof == 1 && p1Tof == 1 && p2Tof == 0) || (kTof == 1 && p1Tof == 0 && p2Tof == 1) || (kTof == 0 && p1Tof == 1 && p2Tof == 1) )
+    {
+    n_cuts->Fill(17);
+
+    // reconstructed Dpm with TOF matching
+		if(cent > -0.5 and cent < 0.5) h_r_dpm_pt_TOF_match_two[0]->Fill(pt);
+		if(cent > 0.5 and cent < 1.5) h_r_dpm_pt_TOF_match_two[1]->Fill(pt);
+		if(cent > 1.5 and cent < 2.5) h_r_dpm_pt_TOF_match_two[2]->Fill(pt);
+		if(cent > 2.5 and cent < 3.5) h_r_dpm_pt_TOF_match_two[3]->Fill(pt);
+		if(cent > 3.5 and cent < 4.5) h_r_dpm_pt_TOF_match_two[4]->Fill(pt);
+		if(cent > 4.5 and cent < 5.5) h_r_dpm_pt_TOF_match_two[5]->Fill(pt);
+		if(cent > 5.5 and cent < 6.5) h_r_dpm_pt_TOF_match_two[6]->Fill(pt);
+		if(cent > 6.5 and cent < 7.5) h_r_dpm_pt_TOF_match_two[7]->Fill(pt);
+		if(cent > 7.5 and cent < 8.5) h_r_dpm_pt_TOF_match_two[8]->Fill(pt);
+
+    h_r_dpm_phi_TOF_match_two->Fill(phi);
+		h_r_dpm_eta_phi_TOF_match_two->Fill(eta, phi);
+    }
+
+    //TOF matching, fill only if all three daughters have TOF
+    if ( kTof == 1 && p1Tof == 1 && p2Tof == 1 )
+    {
+    n_cuts->Fill(18);
+
+    // reconstructed Dpm with TOF matching
+		if(cent > -0.5 and cent < 0.5) h_r_dpm_pt_TOF_match_three[0]->Fill(pt);
+		if(cent > 0.5 and cent < 1.5) h_r_dpm_pt_TOF_match_three[1]->Fill(pt);
+		if(cent > 1.5 and cent < 2.5) h_r_dpm_pt_TOF_match_three[2]->Fill(pt);
+		if(cent > 2.5 and cent < 3.5) h_r_dpm_pt_TOF_match_three[3]->Fill(pt);
+		if(cent > 3.5 and cent < 4.5) h_r_dpm_pt_TOF_match_three[4]->Fill(pt);
+		if(cent > 4.5 and cent < 5.5) h_r_dpm_pt_TOF_match_three[5]->Fill(pt);
+		if(cent > 5.5 and cent < 6.5) h_r_dpm_pt_TOF_match_three[6]->Fill(pt);
+		if(cent > 6.5 and cent < 7.5) h_r_dpm_pt_TOF_match_three[7]->Fill(pt);
+		if(cent > 7.5 and cent < 8.5) h_r_dpm_pt_TOF_match_three[8]->Fill(pt);
+
+    h_r_dpm_phi_TOF_match_three->Fill(phi);
+		h_r_dpm_eta_phi_TOF_match_three->Fill(eta, phi);
+    }
+    
 		
 	} //end entries loop
 
+
+  //write histograms to a new file
 	TFile *f = new TFile(out_file_name, "recreate");
-	h_dpm_pt[0]->Write();
-	h_dpm_pt[1]->Write();
-	h_dpm_pt[2]->Write();
-	h_dpm_pt[3]->Write();
-	h_dpm_pt[4]->Write();
-	h_dpm_pt[5]->Write();
-	h_dpm_pt[6]->Write();
-	h_dpm_pt[7]->Write();
-	h_dpm_pt[8]->Write();
+  //generated Dpm
+  for(unsigned int j = 0; j<9; j++ )
+  {
+    h_dpm_pt[j]->Write();
+  }
 	h_dpm_phi->Write();
 	h_dpm_eta_phi->Write();
 
-	h_r_dpm_pt[0]->Write();
-	h_r_dpm_pt[1]->Write();
-	h_r_dpm_pt[2]->Write();
-	h_r_dpm_pt[3]->Write();
-	h_r_dpm_pt[4]->Write();
-	h_r_dpm_pt[5]->Write();
-	h_r_dpm_pt[6]->Write();
-	h_r_dpm_pt[7]->Write();
-	h_r_dpm_pt[8]->Write();
+  //reconstructed Dpm, no TOF matching
+  for(unsigned int j = 0; j<9; j++ )
+  {
+    h_r_dpm_pt[j]->Write();
+  }
 	h_r_dpm_phi->Write();
 	h_r_dpm_eta_phi->Write();
-	n_cuts->Write();
 
-  h_r_dpm_pt_TOF_match[0]->Write();
-	h_r_dpm_pt_TOF_match[1]->Write();
-	h_r_dpm_pt_TOF_match[2]->Write();
-	h_r_dpm_pt_TOF_match[3]->Write();
-	h_r_dpm_pt_TOF_match[4]->Write();
-	h_r_dpm_pt_TOF_match[5]->Write();
-	h_r_dpm_pt_TOF_match[6]->Write();
-	h_r_dpm_pt_TOF_match[7]->Write();
-	h_r_dpm_pt_TOF_match[8]->Write();
+  //reconstructed Dpm, "soft" TOF matching
+  for(unsigned int j = 0; j<9; j++ )
+  {	
+    h_r_dpm_pt_TOF_match[j]->Write();
+	}
 	h_r_dpm_phi_TOF_match->Write();
 	h_r_dpm_eta_phi_TOF_match->Write();
+
+  //reconstructed Dpm, one daughter has TOF
+  for(unsigned int j = 0; j<9; j++ )
+  {	
+    h_r_dpm_pt_TOF_match_one[j]->Write();
+	}
+	h_r_dpm_phi_TOF_match_one->Write();
+	h_r_dpm_eta_phi_TOF_match_one->Write();
+
+  //reconstructed Dpm, two daughters have TOF
+  for(unsigned int j = 0; j<9; j++ )
+  {	
+    h_r_dpm_pt_TOF_match_two[j]->Write();
+	}
+	h_r_dpm_phi_TOF_match_two->Write();
+	h_r_dpm_eta_phi_TOF_match_two->Write();
+
+  //reconstructed Dpm, three daughters have TOF
+  for(unsigned int j = 0; j<9; j++ )
+  {	
+    h_r_dpm_pt_TOF_match_three[j]->Write();
+	}
+	h_r_dpm_phi_TOF_match_three->Write();
+	h_r_dpm_eta_phi_TOF_match_three->Write();
+
+  n_cuts->Write();
+
 
 	f->Close();
 }
