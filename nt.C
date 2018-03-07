@@ -111,7 +111,7 @@ void nt::Loop()
   TH1F *h_r_dpm_pt_TOF_match_three[9];
   for(unsigned int i = 0; i<9; i++)
   {
-    h_r_dpm_pt_TOF_match_three[i] = new TH1F(Form("h_r_dpm_pt_TOF_match_three%i", i),Form("Reconstructed_Dpm_three_TOF_cent_i", i),150, 0, 15);
+    h_r_dpm_pt_TOF_match_three[i] = new TH1F(Form("h_r_dpm_pt_TOF_match_three%i", i),Form("Reconstructed_Dpm_three_TOF_cent_%i", i),150, 0, 15);
     h_r_dpm_pt_TOF_match_three[i]->Sumw2();
 
   }
@@ -120,6 +120,20 @@ void nt::Loop()
 
 	h_r_dpm_phi_TOF_match_three->Sumw2();
 	h_r_dpm_eta_phi_TOF_match_three->Sumw2();
+  //______________________________________________________________________________________________________________________________________________
+  //none of daughters has TOF - reject all that have TOF
+  TH1F *h_r_dpm_pt_TOF_match_zero[9];
+  for(unsigned int i = 0; i<9; i++)
+  {
+    h_r_dpm_pt_TOF_match_zero[i] = new TH1F(Form("h_r_dpm_pt_TOF_match_zero%i", i),Form("Reconstructed_Dpm_zero_TOF_cent_%i", i),150, 0, 15);
+    h_r_dpm_pt_TOF_match_zero[i]->Sumw2();
+
+  }
+	TH1F *h_r_dpm_phi_TOF_match_zero = new TH1F("h_r_dpm_phi_TOF_match_zero","Reconstructed_Dpm_zero_TOF_phi",64, -3.2, 3.2);
+	TH2F *h_r_dpm_eta_phi_TOF_match_zero = new TH2F("h_r_dpm_eta_phi_TOF_match_zero","Reconstructed_Dpm_zero_TOF_eta_phi", 140, -1.2, 1.2, 64, -3.2, 3.2);
+
+	h_r_dpm_phi_TOF_match_zero->Sumw2();
+	h_r_dpm_eta_phi_TOF_match_zero->Sumw2();
   //------------------------------------------------------------------------------------------------------------------------------------------------
 
 	// now cuts
@@ -309,6 +323,26 @@ void nt::Loop()
     h_r_dpm_phi_TOF_match_three->Fill(phi);
 		h_r_dpm_eta_phi_TOF_match_three->Fill(eta, phi);
     }
+
+    //TOF matching, fill only if all three daughters don't have TOF
+    if ( kTof == 0 && p1Tof == 0 && p2Tof == 0 )
+    {
+    n_cuts->Fill(19);
+
+    // reconstructed Dpm with TOF matching
+		if(cent > -0.5 and cent < 0.5) h_r_dpm_pt_TOF_match_zero[0]->Fill(pt);
+		if(cent > 0.5 and cent < 1.5) h_r_dpm_pt_TOF_match_zero[1]->Fill(pt);
+		if(cent > 1.5 and cent < 2.5) h_r_dpm_pt_TOF_match_zero[2]->Fill(pt);
+		if(cent > 2.5 and cent < 3.5) h_r_dpm_pt_TOF_match_zero[3]->Fill(pt);
+		if(cent > 3.5 and cent < 4.5) h_r_dpm_pt_TOF_match_zero[4]->Fill(pt);
+		if(cent > 4.5 and cent < 5.5) h_r_dpm_pt_TOF_match_zero[5]->Fill(pt);
+		if(cent > 5.5 and cent < 6.5) h_r_dpm_pt_TOF_match_zero[6]->Fill(pt);
+		if(cent > 6.5 and cent < 7.5) h_r_dpm_pt_TOF_match_zero[7]->Fill(pt);
+		if(cent > 7.5 and cent < 8.5) h_r_dpm_pt_TOF_match_zero[8]->Fill(pt);
+
+    h_r_dpm_phi_TOF_match_zero->Fill(phi);
+		h_r_dpm_eta_phi_TOF_match_zero->Fill(eta, phi);
+    }
     
 		
 	} //end entries loop
@@ -363,6 +397,14 @@ void nt::Loop()
 	}
 	h_r_dpm_phi_TOF_match_three->Write();
 	h_r_dpm_eta_phi_TOF_match_three->Write();
+
+  //reconstructed Dpm, no daughters have TOF
+  for(unsigned int j = 0; j<9; j++ )
+  {	
+    h_r_dpm_pt_TOF_match_zero[j]->Write();
+	}
+	h_r_dpm_phi_TOF_match_zero->Write();
+	h_r_dpm_eta_phi_TOF_match_zero->Write();
 
   n_cuts->Write();
 
