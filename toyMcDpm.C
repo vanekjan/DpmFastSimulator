@@ -74,8 +74,11 @@ TPythia6Decayer* pydecay;
 TNtuple* nt;
 TFile* result;
 
-TF1* fKaonMomResolution = NULL;
-TF1* fPionMomResolution = NULL;
+TF1* fKaonPlusMomResolution = NULL;
+TF1* fKaonMinusMomResolution = NULL;
+TF1* fPionPlusMomResolution = NULL;
+TF1* fPionMinusMomResolution = NULL;
+
 TF1* fWeightFunction = NULL;
 const Int_t nParticles = 2;
 const Int_t nCentHftRatio = 9;
@@ -270,9 +273,23 @@ void fill(int const kf, TLorentzVector* b, double weight, TLorentzVector const& 
 	v00 += vertex;
 
 	// smear momentum
-	TLorentzVector const kRMom  = smearMom(kMom,  fKaonMomResolution);
-	TLorentzVector const p1RMom = smearMom(p1Mom, fPionMomResolution);
-	TLorentzVector const p2RMom = smearMom(p2Mom, fPionMomResolution);
+  TLorentzVector kRMom;
+ 	TLorentzVector p1RMom;
+ 	TLorentzVector p2RMom;
+
+  if(kf > 0) //D+
+  {
+    kRMom  = smearMom(kMom,  fKaonMinusMomResolution);
+  	p1RMom = smearMom(p1Mom, fPionPlusMomResolution);
+  	p2RMom = smearMom(p2Mom, fPionPlusMomResolution);
+  }
+  else //D-
+  {
+    kRMom  = smearMom(kMom,  fKaonPlusMomResolution);
+  	p1RMom = smearMom(p1Mom, fPionMinusMomResolution);
+  	p2RMom = smearMom(p2Mom, fPionMinusMomResolution);
+  }
+	
 
 	// smear position
 	TVector3 const kRPos  = smearPosData(1, vertex.z(), centrality, kRMom,  v00);
@@ -775,9 +792,11 @@ bool matchTOF(int const iParticleIndex, TLorentzVector const& mom)
 void bookObjects()
 {
 	cout << "Loading input momentum resolution ..." << endl;
-	TFile f("./input/momentum_resolution.root");
-	fPionMomResolution = (TF1*)f.Get("fPion")->Clone("fPion");
-	fKaonMomResolution = (TF1*)f.Get("fKaon")->Clone("fKaon");
+	TFile f("./input/Momentum_resolution_Run16_SL16j.root");
+	fPionPlusMomResolution = (TF1*)f.Get("PiPlusMomResFit")->Clone("PiPlusMomResFit");
+  fPionMinusMomResolution = (TF1*)f.Get("PiMinusMomResFit")->Clone("PiMinusMomResFit");
+	fKaonPlusMomResolution = (TF1*)f.Get("KPlusMomResFit")->Clone("KPlusMomResFit");
+	fKaonMinusMomResolution = (TF1*)f.Get("KMinusMomResFit")->Clone("KMinusMomResFit");
 	f.Close();
 
 	cout << "Loading TOF eff ..." << endl;
@@ -821,8 +840,8 @@ void bookObjects()
 
 	cout << "Loading input HFT ratios and DCA ..." << endl;
 	
-	TFile *fHftRatio1 = new TFile("./input/HFT_Ratio_VsPt_Centrality_Eta_Phi_Vz_Zdcx_new_cuts_new.root", "read"); //strict nSigma cuts (1Sigma)
-	TFile fDca1("./input/2DProjection_simCent_NoBinWidth_3D_Dca_VsPt_Centrality_Eta_Phi_Vz_Zdcx_new_cuts_new.root");
+	TFile *fHftRatio1 = new TFile("./input/HFT_Ratio_VsPt_Centrality_Eta_Phi_Vz_Zdcx_1Sigma_cuts_binom_err_new_final.root", "read"); //strict nSigma cuts (1Sigma)
+	TFile fDca1("./input/2DProjection_simCent_NoBinWidth_3D_Dca_VsPt_Centrality_Eta_Phi_Vz_Zdcx_1Sigma_cuts_new_final.root");
 	
 	//TFile* fHftRatio1 = new TFile("./input/HFT_Ratio_VsPt_Centrality_Eta_Phi_Vz_Zdcx_ana_cuts_new.root", "read"); //nSigma cuts as in data production
         //TFile fDca1("./input/2DProjection_simCent_NoBinWidth_3D_Dca_VsPt_Centrality_Eta_Phi_Vz_Zdcx_ana_cuts_new.root");
@@ -874,20 +893,20 @@ void bookObjects()
 
 	cout << " Loading TPC tracking efficiencies " << endl;
 
-	TFile fTpcPiPlus("./input/Eff_PionPlus_embedding_v2.root");
-	TFile fTpcPiMinus("./input/Eff_PionMinus_embedding_v2.root");
-	TFile fTpcKPlus("./input/Eff_KaonPlus_embedding_v2.root");
-	TFile fTpcKMinus("./input/Eff_KaonMinus_embedding_v2.root");
+	TFile fTpcPiPlus("./input/Eff_PionPlus_embedding.root"); //all new for Run16, SL16j
+	TFile fTpcPiMinus("./input/Eff_PionMinus_embedding.root");
+	TFile fTpcKPlus("./input/Eff_KaonPlus_embedding.root");
+	TFile fTpcKMinus("./input/Eff_KaonMinus_embedding.root");
 
 	for (int iCent = 0; iCent < nCentHftRatio; ++iCent)
 	{
-		hTpcPiPlus[iCent] = (TH1D*)fTpcPiPlus.Get(Form("h1Ratiocent_%i", iCent));
+		hTpcPiPlus[iCent] = (TH1D*)fTpcPiPlus.Get(Form("TrackEffCent%i", iCent));
 		hTpcPiPlus[iCent]->SetDirectory(0);
-		hTpcPiMinus[iCent] = (TH1D*)fTpcPiMinus.Get(Form("h1Ratiocent_%i", iCent));
+		hTpcPiMinus[iCent] = (TH1D*)fTpcPiMinus.Get(Form("TrackEffCent%i", iCent));
 		hTpcPiMinus[iCent] ->SetDirectory(0);
-		hTpcKPlus[iCent] = (TH1D*)fTpcKPlus.Get(Form("h1Ratiocent_%i", iCent));
+		hTpcKPlus[iCent] = (TH1D*)fTpcKPlus.Get(Form("TrackEffCent%i", iCent));
 		hTpcKPlus[iCent]->SetDirectory(0);
-		hTpcKMinus[iCent] = (TH1D*)fTpcKMinus.Get(Form("h1Ratiocent_%i", iCent));
+		hTpcKMinus[iCent] = (TH1D*)fTpcKMinus.Get(Form("TrackEffCent%i", iCent));
 		hTpcKMinus[iCent]->SetDirectory(0);
 	}
 

@@ -6,7 +6,7 @@
 //#include"TROOT.h"
 
 
-void run_nt(TString infile = "./myOutput/2018-02-05_10-48_new_input_new_production_ana_cuts_old_embedding/merge/output.root", TString outfile = "./myOutput/Histo_output/Dpm.out_new_input_new_production_ana_cuts_old_embedding_TOF_match_01_new.toyMc.root") { //for output from submit
+void run_nt(TString infile = "./myOutput/2018-04-04_05-33_1Sigma_TOF_match/merge/output.root", TString outfile = "./myOutput/Histo_output/Dpm.out_1Sigma_TOF_match_full_stat.toyMc.root") { //for output from submit
 //void run_nt(TString infile = "Dpm.toyMc.root", TString outfile = "Dpm.out_ana_cuts.toyMc.root") { //for output from local test
   std::cout << "start " << std::endl;
 	gROOT->ProcessLine(".L nt.C+");
