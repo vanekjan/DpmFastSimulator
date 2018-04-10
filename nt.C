@@ -33,11 +33,13 @@ void nt::Loop()
 	//by  b_branchname->GetEntry(ientry); //read only this branch
 	if (fChain == 0) return;
 
+  double pT_bins[13] = { 1., 2., 2.5, 3., 3.5, 4., 4.5, 5., 5.5, 6., 7., 8., 10. }; //pT binning
+
 	// generated Dpm histograms
   TH1F *h_dpm_pt[9];
   for(unsigned int i = 0; i<9; i++)
   {
-    h_dpm_pt[i] = new TH1F(Form("h_dpm_pt%i", i),Form("Generated_Dpm_cent_%i", i),150, 0, 15);
+    h_dpm_pt[i] = new TH1F(Form("h_dpm_pt%i", i),Form("Generated_Dpm_cent_%i", i),12, pT_bins);
     h_dpm_pt[i]->Sumw2();
 
   }
@@ -51,7 +53,7 @@ void nt::Loop()
   TH1F *h_r_dpm_pt[9];
   for(unsigned int i = 0; i<9; i++)
   {
-    h_r_dpm_pt[i] = new TH1F(Form("h_r_dpm_pt%i", i),Form("Reconstructed_Dpm_no_TOF_cent_%i", i),150, 0, 15);
+    h_r_dpm_pt[i] = new TH1F(Form("h_r_dpm_pt%i", i),Form("Reconstructed_Dpm_no_TOF_cent_%i", i),12, pT_bins);
     h_r_dpm_pt[i]->Sumw2();
 
   }
@@ -67,7 +69,7 @@ void nt::Loop()
   TH1F *h_r_dpm_pt_TOF_match[9];
   for(unsigned int i = 0; i<9; i++)
   {
-    h_r_dpm_pt_TOF_match[i] = new TH1F(Form("h_r_dpm_pt_TOF_match%i", i),Form("Reconstructed_Dpm_hybrid_TOF_cent_%i", i),150, 0, 15);
+    h_r_dpm_pt_TOF_match[i] = new TH1F(Form("h_r_dpm_pt_TOF_match%i", i),Form("Reconstructed_Dpm_hybrid_TOF_cent_%i", i),12, pT_bins);
     h_r_dpm_pt_TOF_match[i]->Sumw2();
 
   }
@@ -83,7 +85,7 @@ void nt::Loop()
   TH1F *h_r_dpm_pt_TOF_match_one[9];
   for(unsigned int i = 0; i<9; i++)
   {
-    h_r_dpm_pt_TOF_match_one[i] = new TH1F(Form("h_r_dpm_pt_TOF_match_one%i", i),Form("Reconstructed_Dpm_one_TOF_cent_%i", i),150, 0, 15);
+    h_r_dpm_pt_TOF_match_one[i] = new TH1F(Form("h_r_dpm_pt_TOF_match_one%i", i),Form("Reconstructed_Dpm_one_TOF_cent_%i", i),12, pT_bins);
     h_r_dpm_pt_TOF_match_one[i]->Sumw2();
 
   }
@@ -97,7 +99,7 @@ void nt::Loop()
   TH1F *h_r_dpm_pt_TOF_match_two[9];
   for(unsigned int i = 0; i<9; i++)
   {
-    h_r_dpm_pt_TOF_match_two[i] = new TH1F(Form("h_r_dpm_pt_TOF_match_two%i", i),Form("Reconstructed_Dpm_two_TOF_cent_%i", i),150, 0, 15);
+    h_r_dpm_pt_TOF_match_two[i] = new TH1F(Form("h_r_dpm_pt_TOF_match_two%i", i),Form("Reconstructed_Dpm_two_TOF_cent_%i", i),12, pT_bins);
     h_r_dpm_pt_TOF_match_two[i]->Sumw2();
 
   }
@@ -111,7 +113,7 @@ void nt::Loop()
   TH1F *h_r_dpm_pt_TOF_match_three[9];
   for(unsigned int i = 0; i<9; i++)
   {
-    h_r_dpm_pt_TOF_match_three[i] = new TH1F(Form("h_r_dpm_pt_TOF_match_three%i", i),Form("Reconstructed_Dpm_three_TOF_cent_%i", i),150, 0, 15);
+    h_r_dpm_pt_TOF_match_three[i] = new TH1F(Form("h_r_dpm_pt_TOF_match_three%i", i),Form("Reconstructed_Dpm_three_TOF_cent_%i", i),12, pT_bins);
     h_r_dpm_pt_TOF_match_three[i]->Sumw2();
 
   }
@@ -125,7 +127,7 @@ void nt::Loop()
   TH1F *h_r_dpm_pt_TOF_match_zero[9];
   for(unsigned int i = 0; i<9; i++)
   {
-    h_r_dpm_pt_TOF_match_zero[i] = new TH1F(Form("h_r_dpm_pt_TOF_match_zero%i", i),Form("Reconstructed_Dpm_zero_TOF_cent_%i", i),150, 0, 15);
+    h_r_dpm_pt_TOF_match_zero[i] = new TH1F(Form("h_r_dpm_pt_TOF_match_zero%i", i),Form("Reconstructed_Dpm_zero_TOF_cent_%i", i),12, pT_bins);
     h_r_dpm_pt_TOF_match_zero[i]->Sumw2();
 
   }
