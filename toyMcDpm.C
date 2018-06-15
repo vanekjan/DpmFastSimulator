@@ -840,8 +840,8 @@ void bookObjects()
 
 	cout << "Loading input HFT ratios and DCA ..." << endl;
 	
-	TFile *fHftRatio1 = new TFile("./input/HFT_Ratio_VsPt_Centrality_Eta_Phi_Vz_Zdcx_1Sigma_cuts_binom_err_new_final.root", "read"); //strict nSigma cuts (1Sigma)
-	TFile fDca1("./input/2DProjection_simCent_NoBinWidth_3D_Dca_VsPt_Centrality_Eta_Phi_Vz_Zdcx_1Sigma_cuts_new_final.root");
+	TFile *fHftRatio1 = new TFile("./input/HFT_Ratio_VsPt_Centrality_Eta_Phi_Vz_Zdcx_1Sigma_DCA_cuts_binom_err_new_final_new_02.root", "read"); //strict nSigma cuts (1Sigma)
+	TFile fDca1("./input/2DProjection_simCent_NoBinWidth_3D_Dca_VsPt_Centrality_Eta_Phi_Vz_Zdcx_16Nov2.root");
 	
 	//TFile* fHftRatio1 = new TFile("./input/HFT_Ratio_VsPt_Centrality_Eta_Phi_Vz_Zdcx_ana_cuts_new.root", "read"); //nSigma cuts as in data production
         //TFile fDca1("./input/2DProjection_simCent_NoBinWidth_3D_Dca_VsPt_Centrality_Eta_Phi_Vz_Zdcx_ana_cuts_new.root");

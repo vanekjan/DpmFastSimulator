@@ -195,13 +195,13 @@ void nt::Loop()
 		if (decayLength < con_decayLength) continue;
 		n_cuts->Fill(7);
 		// kDca
-		if (kDca < con_kDca) continue;
+		if (kRDca < con_kDca) continue; //orig. kDca
 		n_cuts->Fill(8);
 		// p1Dca
-		if (p1Dca < con_pDca) continue;
+		if (p1RDca < con_pDca) continue; //orig. pi1Dca
 		n_cuts->Fill(9);
 		// p2Dca
-		if (p2Dca < con_pDca) continue;
+		if (p2RDca < con_pDca) continue; //orig. pi2Dca
 		n_cuts->Fill(10);
 		// V0max missing
 		//
@@ -246,8 +246,8 @@ void nt::Loop()
     //if (kTof != 1 || p1Tof != 1 || p2Tof != 1) continue;
     //n_cuts->Fill(15);
 
-    //TOF matching, "soft" TOF - one or more particles has to have TOF information
-    if (kTof == 1 || p1Tof == 1 || p2Tof == 1)
+    //TOF matching, always match K - anternative to hybrid method
+    if (kTof == 1)
     {
     n_cuts->Fill(15);
 
