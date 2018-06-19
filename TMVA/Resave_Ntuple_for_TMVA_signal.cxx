@@ -74,6 +74,7 @@ void Resave_Ntuple_for_TMVA_signal()
 
 	//centrality
 	Float_t cent;
+  Float_t w;
 
 	//---------------------FOR NEW (for TMVA input)-------------------------------
 
@@ -101,10 +102,12 @@ void Resave_Ntuple_for_TMVA_signal()
 	Float_t v0z;
 
 	//D meson
-	Float_t D_theta, D_decayL, D_phi, D_eta, D_pt, D_mass, D_dV0Max;
+	Float_t D_cos_theta, D_decayL, D_phi, D_eta, D_pt, D_mass, D_dV0Max;
 
 	//centrality, refMult
 	//Float_t mcentrality;
+  Float_t mreweight;
+  
 
 
 
@@ -153,6 +156,7 @@ void Resave_Ntuple_for_TMVA_signal()
 
 	//centrality, refmult
 	tree->SetBranchAddress("cent", &cent);		//Float_t cmentrality
+  tree->SetBranchAddress("w", &w); //weight from pp 200 GeV
 
 
 
@@ -185,13 +189,15 @@ void Resave_Ntuple_for_TMVA_signal()
         
 
         //D meson
-        TMVA_tree[i][j]->Branch("D_theta", &D_theta, "D_theta/F"); 	//Float_t D_theta
+        TMVA_tree[i][j]->Branch("D_cos_theta", &D_cos_theta, "D_cos_theta/F"); 	//Float_t D_theta
         TMVA_tree[i][j]->Branch("D_decayL", &D_decayL, "D_decayL/F");	//Float_t D_decayL
         TMVA_tree[i][j]->Branch("D_phi", &D_phi, "D_phi/F");			//Float_t D_phi
         TMVA_tree[i][j]->Branch("D_eta", &D_eta, "D_eta/F");			//Float_t pi2_eta
         TMVA_tree[i][j]->Branch("D_pt", &D_pt, "D_pt/F");				//Float_t pi2_pt
         TMVA_tree[i][j]->Branch("D_mass", &D_mass, "D_mass/F");		//Float_t D_mass
         TMVA_tree[i][j]->Branch("D_dV0Max", &D_dV0Max, "D_dV0Max/F");	//Float_t D_dV0Max
+
+        TMVA_tree[i][j]->Branch("mreweight", &mreweight, "mreweight/F");	//Float_t D_dV0Max
 
      }
    }
@@ -277,25 +283,27 @@ void Resave_Ntuple_for_TMVA_signal()
         pi2_phi = p2RPhi;
         pi2_eta = p2REta;
         pi2_pt  = p2RPt;
-        pi2_dca = p2RDca/1000; // !!!!In simulation in mum, in data in cm!!!!
+        pi2_dca = p2RDca/10000; // !!!!In simulation in mum, in data in cm!!!!
 
         k_phi = kRPhi;
         k_eta = kREta;
         k_pt  = kRPt;
-        k_dca = kRDca/1000; // !!!!In simulation in mum, in data in cm!!!!
+        k_dca = kRDca/10000; // !!!!In simulation in mum, in data in cm!!!!
 
-        mdcaMax = dcaDaughters/1000; // !!!!In simulation in mum, in data in cm!!!!
+        mdcaMax = dcaDaughters/10000; // !!!!In simulation in mum, in data in cm!!!!
       //flag already saved on lines 554 - 564
         //primVz = primVz_old;
 
-        D_theta = TMath::ACos(cosTheta); //save as theta - same as in data
-        D_decayL = decayLength/1000; // !!!!In simulation in mum, in data in cm!!!!
+        D_cos_theta = cosTheta; //save as cos theta - in data (base production) is just theta!!!
+        D_decayL = decayLength/10000; // !!!!In simulation in mum, in data in cm!!!!
         D_phi = rPhi;
         D_eta = rEta;
         D_pt = rPt;
         D_mass = rM;
-        D_dV0Max = mdV0Max/1000; // !!!!In simulation in mum, in data in cm!!!!
+        D_dV0Max = mdV0Max/10000; // !!!!In simulation in mum, in data in cm!!!!
         //mcentrality = mcentrality_old;
+
+        mreweight = w;
         
 
         int centrality = -1; //default value
