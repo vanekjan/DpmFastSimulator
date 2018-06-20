@@ -258,12 +258,14 @@ void Resave_Ntuple_for_TMVA_signal()
     		if (cent < -1) continue;
     		
     		if (fabs(kREta) > 1 || fabs(p1REta) > 1 || fabs(p2REta) > 1) continue;
-    		// HFT
+
+/*      //probably do not need HFT and TPC matching here     		
+        // HFT
     		if (kHft != 1 || p1Hft != 1 || p2Hft != 1) continue;    		
     		// TPC
     		if (kTpc != 1 || p1Tpc != 1 || p2Tpc != 1) continue;
     		//if (kTof != 1 || p1Tof != 1 || p2Tof != 1) continue;
-    		
+*/    		
     		// kRPt
     		if (kRPt < 0.5) continue;
     		
@@ -272,6 +274,28 @@ void Resave_Ntuple_for_TMVA_signal()
     		
     		// p2RPt
     		if (p2RPt < 0.5) continue;
+
+
+        //topological pre-cuts - same as in analysis production
+        //to match variables ranges in simulation and background sample
+        if (cosTheta < 0.997) continue;
+    		
+    		// dcaDaughters
+    		if (dcaDaughters > 90) continue; //kuba
+    		
+    		// decayLength
+    		if (decayLength < 30) continue;
+    		
+    		// kDca
+    		if (kRDca < 70) continue; //orig. kDca
+    		
+    		// p1Dca
+		    if (p1RDca < 90) continue; //orig. pi1Dca
+		    
+		    // p2Dca
+		    if (p2RDca < 90) continue; //orig. pi2Dca
+
+        if (mdV0Max > 220) continue;
     		
 
         
