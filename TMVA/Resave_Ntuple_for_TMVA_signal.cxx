@@ -22,8 +22,8 @@ using namespace std;
 void Resave_Ntuple_for_TMVA_signal()
 {
 
-    TFile *soubor = new TFile("../myOutput/2018-04-20_02-38_new_HFT_pT_bins_final/merge/output.root", "READ"); //original production (signal + background)
-    TFile *out_file = new TFile("./output/Dpm_TMVA_signal.root", "RECREATE"); //input for TMVA from data (siglnal)
+    TFile *soubor = new TFile("../myOutput/2018-04-20_02-38_new_HFT_pT_bins_final/merge/output.root", "READ"); //original production (fast-sim)
+    TFile *out_file = new TFile("./output/Dpm_TMVA_signal_invM_cut_new.root", "RECREATE"); //input for TMVA from data (siglnal)
 
     //original TTree
     TTree *tree = (TTree*)soubor->Get("nt"); //TNtuple from PYTHIA+fast-sim 
@@ -259,6 +259,8 @@ void Resave_Ntuple_for_TMVA_signal()
     		
     		if (fabs(kREta) > 1 || fabs(p1REta) > 1 || fabs(p2REta) > 1) continue;
 
+        if(rM < 1.7 || rM > 2.1) continue; //set invariant mass ranges as they are in data
+
 /*      //probably do not need HFT and TPC matching here     		
         // HFT
     		if (kHft != 1 || p1Hft != 1 || p2Hft != 1) continue;    		
@@ -267,35 +269,35 @@ void Resave_Ntuple_for_TMVA_signal()
     		//if (kTof != 1 || p1Tof != 1 || p2Tof != 1) continue;
 */    		
     		// kRPt
-    		if (kRPt < 0.5) continue;
-    		
+    		if (kRPt < 0.3) continue; //old production 0.5 GeV/c
+    		                          //new production 0.3 GeV/c
     		// p1RPt
-    		if (p1RPt < 0.5) continue;
+    		if (p1RPt < 0.3) continue;
     		
     		// p2RPt
-    		if (p2RPt < 0.5) continue;
+    		if (p2RPt < 0.3) continue;
 
 
         //topological pre-cuts - same as in analysis production
         //to match variables ranges in simulation and background sample
-        if (cosTheta < 0.997) continue;
+        if (cosTheta < 0.995) continue; //old 0.997
     		
     		// dcaDaughters
-    		if (dcaDaughters > 90) continue; //kuba
+    		if (dcaDaughters > 100) continue; //kuba, old 90
     		
     		// decayLength
-    		if (decayLength < 30) continue;
+    		if (decayLength < 20 || decayLength > 2000) continue; //old 20
     		
     		// kDca
-    		if (kRDca < 70) continue; //orig. kDca
+    		if (kRDca < 60) continue; //orig. kDca, old 70
     		
     		// p1Dca
-		    if (p1RDca < 90) continue; //orig. pi1Dca
+		    if (p1RDca < 60) continue; //orig. pi1Dca, old 90
 		    
 		    // p2Dca
-		    if (p2RDca < 90) continue; //orig. pi2Dca
+		    if (p2RDca < 60) continue; //orig. pi2Dca, old 90
 
-        if (mdV0Max > 220) continue;
+        if (mdV0Max > 250) continue; //old 220
     		
 
         
