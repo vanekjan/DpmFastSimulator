@@ -48,9 +48,9 @@ void run_nt(TString infile = "./myOutput/2018-04-20_02-38_new_HFT_pT_bins_final/
 	n.Set_con_pRPt(0.5);
 */
   //_____________________________________________________________________________
-  //analysis pre-cuts - for TMVA signal estimation
+  //analysis pre-cuts - for TMVA signal estimation (iteration 0 or 1)
 	n.Set_con_cosTheta(0.995); //old 0.997
-	n.Set_con_dcaDaughters(100); //old 90
+	n.Set_con_dcaDaughters(90); //old 90
 	n.Set_con_decayLength(20); //old 30
 	n.Set_con_kDca(60); //old 70
 	n.Set_con_pDca(60); //old 90
@@ -59,6 +59,7 @@ void run_nt(TString infile = "./myOutput/2018-04-20_02-38_new_HFT_pT_bins_final/
 	n.Set_con_kRPt(0.3); //old 0.5
 	n.Set_con_pRPt(0.3);
 	//_____________________________________________________________________________
+  //for itaraiton 2 use TMVA_cuts
 	
 	n.Loop();
 	std::cout << "end " << std::endl;

@@ -23,7 +23,7 @@ void Resave_Ntuple_for_TMVA_signal()
 {
 
     TFile *soubor = new TFile("../myOutput/2018-04-20_02-38_new_HFT_pT_bins_final/merge/output.root", "READ"); //original production (fast-sim)
-    TFile *out_file = new TFile("./output/Dpm_TMVA_signal_invM_cut_new.root", "RECREATE"); //input for TMVA from data (siglnal)
+    TFile *out_file = new TFile("./output/Dpm_TMVA_signal_invM_cut_new_5_pT_bins.root", "RECREATE"); //input for TMVA from data (siglnal)
 
     //original TTree
     TTree *tree = (TTree*)soubor->Get("nt"); //TNtuple from PYTHIA+fast-sim 
@@ -35,11 +35,14 @@ void Resave_Ntuple_for_TMVA_signal()
 
     double pT_bins[nPtBins+1] = { 1., 2., 2.5, 3., 3.5, 4., 4.5, 5., 5.5, 6., 7., 8., 10. }; //pT binning
 
-    TTree *TMVA_tree[nCentBins][nPtBins];
+    const int nPtBins_TMVA = 5;
+    float const pT_bins_TMVA[nPtBins_TMVA+1] = {1., 2., 3., 5., 7., 10.}; //my TMVA pT bins
+
+    TTree *TMVA_tree[nCentBins][nPtBins_TMVA];
 
     for(unsigned int i = 0; i<nCentBins; i++)
     {
-      for(unsigned int j = 0; j<nPtBins; j++)
+      for(unsigned int j = 0; j<nPtBins_TMVA; j++)
       {
         TMVA_tree[i][j] = new TTree(Form("Dpm_TMVA_signal_cent_%i_pT_%i", i, j), Form("Dpm_TMVA_signal_cent_%i_pT_%i", i, j));
       }
@@ -163,7 +166,7 @@ void Resave_Ntuple_for_TMVA_signal()
    //--------------------FOR NEW----------------------------------------------------------------
    for(unsigned int i = 0; i < nCentBins; i++)
    {
-     for(unsigned int j=0; j < nPtBins; j++)
+     for(unsigned int j=0; j < nPtBins_TMVA; j++)
      {
         //Pion1
         TMVA_tree[i][j]->Branch("pi1_phi", &pi1_phi, "pi1_phi/F");			 			//Float_t pi1_phi
@@ -280,10 +283,10 @@ void Resave_Ntuple_for_TMVA_signal()
 
         //topological pre-cuts - same as in analysis production
         //to match variables ranges in simulation and background sample
-        if (cosTheta < 0.995) continue; //old 0.997
+        if (cosTheta < 0.995 || cosTheta > 1) continue; //old 0.997
     		
     		// dcaDaughters
-    		if (dcaDaughters > 100) continue; //kuba, old 90
+    		if (dcaDaughters >= 90) continue; //kuba, old 90
     		
     		// decayLength
     		if (decayLength < 20 || decayLength > 2000) continue; //old 20
@@ -297,7 +300,7 @@ void Resave_Ntuple_for_TMVA_signal()
 		    // p2Dca
 		    if (p2RDca < 60) continue; //orig. pi2Dca, old 90
 
-        if (mdV0Max > 250) continue; //old 220
+        if (mdV0Max >= 250) continue; //old 220
     		
 
         
@@ -335,15 +338,15 @@ void Resave_Ntuple_for_TMVA_signal()
         int centrality = -1; //default value
         int pT_bin = -1; //default value
 
-        for(unsigned int l = 0; l < nPtBins; l++) //determine pT bin
+        for(unsigned int l = 0; l < nPtBins_TMVA; l++) //determine pT bin
         {
-            if(rPt > pT_bins[l] && rPt <= pT_bins[l+1])
+            if(rPt > pT_bins_TMVA[l] && rPt <= pT_bins_TMVA[l+1])
             {
                 pT_bin = l;
             }
         }
 
-        if( pT_bin < 0 ) continue;
+        if( pT_bin < 0 || pT_bin > nPtBins_TMVA ) continue;
 
         if(cent == 7 || cent == 8)  //centrality 0-10%
         {
@@ -374,7 +377,7 @@ void Resave_Ntuple_for_TMVA_signal()
 
     for(unsigned int i = 0; i < nCentBins; i++ )
     {
-      for(unsigned int j = 0; j< nPtBins; j++)
+      for(unsigned int j = 0; j< nPtBins_TMVA; j++)
       {
         TMVA_tree[i][j]->Write();
       }
