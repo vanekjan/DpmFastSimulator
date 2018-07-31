@@ -23,7 +23,7 @@ void Resave_Ntuple_for_TMVA_signal()
 {
 
     TFile *soubor = new TFile("../myOutput/2018-04-20_02-38_new_HFT_pT_bins_final/merge/output.root", "READ"); //original production (fast-sim)
-    TFile *out_file = new TFile("./output/Dpm_TMVA_signal_invM_cut_new_5_pT_bins.root", "RECREATE"); //input for TMVA from data (siglnal)
+    TFile *out_file = new TFile("./output/Dpm_TMVA_signal_invM_cut_new_6_pT_bins.root", "RECREATE"); //input for TMVA from data (siglnal)
 
     //original TTree
     TTree *tree = (TTree*)soubor->Get("nt"); //TNtuple from PYTHIA+fast-sim 
@@ -35,8 +35,8 @@ void Resave_Ntuple_for_TMVA_signal()
 
     double pT_bins[nPtBins+1] = { 1., 2., 2.5, 3., 3.5, 4., 4.5, 5., 5.5, 6., 7., 8., 10. }; //pT binning
 
-    const int nPtBins_TMVA = 5;
-    float const pT_bins_TMVA[nPtBins_TMVA+1] = {1., 2., 3., 5., 7., 10.}; //my TMVA pT bins
+    const int nPtBins_TMVA = 6;
+    float const pT_bins_TMVA[nPtBins_TMVA+1] = {0., 1., 2., 3., 5., 7., 10.}; //my TMVA pT bins
 
     TTree *TMVA_tree[nCentBins][nPtBins_TMVA];
 
@@ -346,7 +346,7 @@ void Resave_Ntuple_for_TMVA_signal()
             }
         }
 
-        if( pT_bin < 0 || pT_bin > nPtBins_TMVA ) continue;
+        if( pT_bin < 0 ) continue;
 
         if(cent == 7 || cent == 8)  //centrality 0-10%
         {

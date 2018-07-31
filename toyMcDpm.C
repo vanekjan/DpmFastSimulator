@@ -71,6 +71,7 @@ int getVzIndexHftRatio(double);
 int getPhiIndexHftRatio(double);
 
 TPythia6Decayer* pydecay;
+
 TNtuple* nt;
 TFile* result;
 
@@ -91,7 +92,7 @@ const Double_t EtaEdgeHftRatio[nEtasHftRatio + 1] =
 {
 	-1.0, -0.8, -0.6, -0.4, -0.2, 0.0, 0.2, 0.4, 0.6, 0.8, 1.0
 };
-const Double_t VzEdgeHftRatio[nVzsHftRatio + 1] = { -6., -4., -2.,  0., 2.,  4.,  6.};
+const Double_t VzEdgeHftRatio[nVzsHftRatio + 1] = { -6.0e4, -4.0e4, -2.0e4, 0.0, 2.0e4, 4.0e4, 6.0e4};
 /*{
 	-6.0e4, -4.0e4, -2.0e4, 0.0, 2.0e4, 4.0e4, 6.0e4
 };
@@ -171,7 +172,7 @@ float const gVzCut = 6.0e4;
 float const acceptanceRapidity = 1.0;
 float const sigmaPos0 = 15.2;
 float const pxlLayer1Thickness = 0.00486;
-float const sigmaVertexCent[nCentHftRatio] = {31., 18.1, 12.8, 9.3, 7.2, 5.9, 5., 4.6, 4.};
+//float const sigmaVertexCent[nCentHftRatio] = {31., 18.1, 12.8, 9.3, 7.2, 5.9, 5., 4.6, 4.};
 
 TF1* fPionTofEff= NULL;
 TF1* fKaonTofEff= NULL;
@@ -196,7 +197,7 @@ void toyMcDpm(int npart = 10000)
 	// setDecayChannels(617); // D+ --> K*bar0 + pi+ // --> K*bar0 -->K- pi+
 
 
-	TLorentzVector* b_d = new TLorentzVector;
+	
 	TClonesArray ptl("TParticle", 10);
 	for (int ipart = 0; ipart < npart; ipart++)
 	{
@@ -205,10 +206,14 @@ void toyMcDpm(int npart = 10000)
 			cout << "____________ ipart = " << ipart / static_cast<float>(npart) << " ________________" << endl;
     }
 
+    TLorentzVector* b_d = new TLorentzVector;
+    TLorentzVector* b_d2 = new TLorentzVector;
+
 		getKinematics(*b_d, M_D_PLUS);
+    getKinematics(*b_d2, M_D_PLUS);
 
 		decayAndFill(411, b_d, fWeightFunction->Eval(b_d->Perp()), ptl);
-		decayAndFill(-411, b_d, fWeightFunction->Eval(b_d->Perp()), ptl);
+		decayAndFill(-411, b_d2, fWeightFunction->Eval(b_d->Perp()), ptl);
 		if (ipart % 1000 == 1) nt->AutoSave("SaveSelf");
 	}
 
@@ -841,10 +846,7 @@ void bookObjects()
 	cout << "Loading input HFT ratios and DCA ..." << endl;
 	
 	TFile *fHftRatio1 = new TFile("./input/HFT_Ratio_VsPt_Centrality_Eta_Phi_Vz_Zdcx_1Sigma_DCA_cuts_binom_err_new_final_new_02.root", "read"); //strict nSigma cuts (1Sigma)
-	TFile fDca1("./input/2DProjection_simCent_NoBinWidth_3D_Dca_VsPt_Centrality_Eta_Phi_Vz_Zdcx_16Nov2.root");
-	
-	//TFile* fHftRatio1 = new TFile("./input/HFT_Ratio_VsPt_Centrality_Eta_Phi_Vz_Zdcx_ana_cuts_new.root", "read"); //nSigma cuts as in data production
-        //TFile fDca1("./input/2DProjection_simCent_NoBinWidth_3D_Dca_VsPt_Centrality_Eta_Phi_Vz_Zdcx_ana_cuts_new.root");
+  TFile fDca1("./input/2DProjection_simCent_NoBinWidth_3D_Dca_VsPt_Centrality_Eta_Phi_Vz_Zdcx_1Sigma_DCA_cuts_new_final.root");
 
 //cout<<"test"<<endl;
 	

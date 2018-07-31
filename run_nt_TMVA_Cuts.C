@@ -6,7 +6,7 @@
 //#include"TROOT.h"
 
 
-void run_nt_TMVA_Cuts(TString infile = "./myOutput/2018-04-20_02-38_new_HFT_pT_bins_final/merge/output.root", TString outfile = "./myOutput/Histo_output/TMVA/Dpm.out_eff_TMVA_5_pT_bins.toyMc.root") { //for output from submit
+void run_nt_TMVA_Cuts(TString infile = "./myOutput/2018-04-20_02-38_new_HFT_pT_bins_final/merge/output.root", TString outfile = "./myOutput/Histo_output/TMVA/Dpm.out_eff_TMVA_6_pT_bins_iter_2.toyMc.root") { //for output from submit
 //void run_nt(TString infile = "Dpm.toyMc.root", TString outfile = "Dpm.out_ana_cuts.toyMc.root") { //for output from local test
   std::cout << "start " << std::endl;
 	gROOT->ProcessLine(".L nt_TMVA_Cuts.C+");

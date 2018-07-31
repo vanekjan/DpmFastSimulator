@@ -130,7 +130,16 @@ void nt_TMVA_Cuts::Loop()
 		
 
     
-    int ptBin = h_dpm_pt[0]->FindBin(rPt)-1; //find pT bin
+    int ptBin = -1; //find pT bin (as in real data, not TMVA!!!)
+
+    for(int j = 0; j < nPtBins; j++) //loop over pT bins
+    {
+      if(pt > pT_bins[j] && pt <= pT_bins[j+1])
+      {
+        ptBin = j;
+      }
+    }
+
     int centBin_9 = (int)cent; //set centrality bin
 
     int centBin = -1;
@@ -141,7 +150,7 @@ void nt_TMVA_Cuts::Loop()
     if( cent != -1 ) centBin = 3; //0-80%
 
 
-    if(ptBin < 0 || ptBin > nPtBins_TMVA-1) continue; //reject Dpm with pT out of range
+    if(ptBin < 0 ) continue; //reject Dpm with pT out of range
 
     //centra and pT dependent topological cuts from TMVA		
     if (mdV0Max > D_dV0Max_cut[centBin][ptBin]*10000) continue; //simulation is in mum, data in cm - has to convert units to use the same file for cuts

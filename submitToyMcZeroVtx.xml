@@ -12,7 +12,7 @@
                                                 
 	<ResourceUsage>
 		<Memory>
-			<MinMemory>4000</MinMemory>
+			<MinMemory>3000</MinMemory>
 		</Memory>
 	</ResourceUsage>
 
